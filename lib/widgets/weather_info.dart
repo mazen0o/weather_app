@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/cubits/get_weather_cubit/get_weather_cubit.dart';
+import 'package:weather_app/models/weather_model.dart';
 
 class WeatherInfo extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    var weatherModel =BlocProvider.of<GetWeatherCubit>(context).weatherModel;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 30),
@@ -10,12 +15,12 @@ class WeatherInfo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "Alexandria",
+           weatherModel.cityName ,
             style: TextStyle(
                 color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Text(
-            "updated at : 23:46",
+            "updated at : ${weatherModel.update.hour} :${weatherModel.update.minute} ",
             style: TextStyle(
               color: Colors.black,
               fontSize: 20,
@@ -27,17 +32,19 @@ class WeatherInfo extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset("assets/cloudy.png"),
+              Image.network(
+               "https:${weatherModel.image}"
+              ),
               Text(
-                "17",
+                "${weatherModel.temp.round()}",
                 style: TextStyle(
                   fontSize: 20,
                 ),
               ),
               Column(
                 children: [
-                  Text("maxTemp:17"),
-                  Text("minTemp:10"),
+                  Text("maxTemp:${weatherModel.maxTemp.round()}"),
+                  Text("minTemp:${weatherModel.minTemp.round()}"),
                 ],
               ),
             ],
@@ -46,7 +53,7 @@ class WeatherInfo extends StatelessWidget {
             height: 20,
           ),
           Text(
-            "Light Rain",
+            weatherModel.condition,
             style: TextStyle(
                 color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
           ),
@@ -55,3 +62,4 @@ class WeatherInfo extends StatelessWidget {
     );
   }
 }
+

@@ -29,12 +29,13 @@ class HomeView extends StatelessWidget {
       ),
       body: BlocBuilder<GetWeatherCubit,WeatherState>(
       builder: (context,state){
-        if(state is WeatherLoadedState){
-          return WeatherInfo();
-        }else if(state is InitialNoWeatherState){
+
+        if(state is InitialNoWeatherState){
           return NoWeatherInfo();
+        }else if(state is WeatherLoadedState){
+          return WeatherInfo();
         }else {
-          return Text("Ops there was error");
+          return Text("Ops there was errorrrrrrrrrrrr");
         }
       },
 
